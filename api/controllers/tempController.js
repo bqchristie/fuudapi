@@ -14,7 +14,7 @@ function getCurrentTemps(cities) {
     return new Promise(function (resolve, reject) {
             Temp.find({
                 'city': {$in: cities},
-                'createdAt': {$gt: getRefreshTreshhold()}
+                'createdAt': {$gt: getRefreshTreshold()}
             }).then(results => {
                 resolve(results)
             })
@@ -25,7 +25,7 @@ function getCurrentTemps(cities) {
  *
  * @returns {Date}
  */
-function getRefreshTreshhold() {
+function getRefreshTreshold() {
     return moment()
         .subtract(process.env.REFRESH_INTERVAL, process.env.REFRESH_UNIT)
         .toDate()
