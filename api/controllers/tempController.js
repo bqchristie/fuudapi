@@ -8,7 +8,7 @@ let axios = require('axios')
  * @param cities
  * @returns {Promise<any>}
  */
-function findSavedTemps(cities) {
+function getCurrentTemps(cities) {
 
     /* TODO: Add date param ot query */
     return new Promise(function(resolve, reject) {
@@ -25,36 +25,58 @@ function findSavedTemps(cities) {
  * @param savedCities
  * @param requestedCities
  */
-function getMissingTemps(requestedCities, savedCities) {
-    var savedCities = _.map(savedCities,'city')
-    let missingTemps = _.difference(requestedCities, savedCities);
+function getMissingTemps(requestedCities, existingTemps) {
 
+    return new Promise(function(resolve, reject) {
+        let missingCities = _.difference(requestedCities,  _.map(existingTemps,'city'));
 
-    missingTemps.forEach( city => {
-        getNewTemp(city);
+        Promise.all(getOpenWeatherCalls(missingCities)).then( responses => {
+            let readings = []
+            responses.forEach(resp => {
+                readings.push(createTemp(resp.data))
+
+            })
+            resolve(readings);
+        })
     })
-    return findSavedTemps();
+}
+
+/**
+ *
+ * @param data
+ */
+function createTemp(data) {
+    let temp = new Temp({
+        city: data.name,
+        temperature: data.main.temp
+    })
+    temp.save();
+    return temp;
+}
+
+/**
+ *
+ * @param cities
+ * @returns {*}
+ */
+function getOpenWeatherCalls(cities){
+    return  cities.map( city => {
+        return axios.get(getOpenWeatherUrl(city))
+    })
 }
 
 /**
  *
  * @param city
+ * @returns {string}
  */
-function getNewTemp(city) {
-    /* TODO refactor this into config
-       handle 404
-    */
-     */
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=bf89e941da14d9a5e0a60764ed99bf4a`
-    axios.get(url).then(resp => {
-        let temp = new Temp({
-            city:city,
-            temperature: resp.data.main.temp
-        })
-        temp.save();
-    }).catch( err => throw err)
-
+function getOpenWeatherUrl(city) {
+    let url = `${process.env.OPEN_WEATHER_URL}?q=${city}&APPID=${process.env.OPEN_WEATHER_API_KEY}`
+    console.log(url);
+    return url
 }
+
+
 
 /**
  *
@@ -62,9 +84,9 @@ function getNewTemp(city) {
  * @returns {Promise<any>}
  */
 async function  getTemps(cities) {
-    const savedTemps = await findSavedTemps(cities)
-    const allTemperatures = await getMissingTemps(cities, savedTemps)
-    return allTemperatures;
+    const savedTemps = await getCurrentTemps(cities)
+    const newTemps = await getMissingTemps(cities, savedTemps)
+    return savedTemps.concat(newTemps)
 
 }
 
