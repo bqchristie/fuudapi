@@ -1,15 +1,12 @@
 let router = require('express').Router();
-let _ = require('lodash');
 let tempController = require('../controllers/tempController');
 
 /*
- *   Create an endpoint in node that accepts minimum two cities and then calls an open
- *   weather API (ie. /endpoint/cities/toronto|chicago )
- *
- *   TODO: Pipe delimted url
+ *   Create an endpoint in node that accepts minimum two cities and then calls
+ *   an open weather API (ie. /endpoint/cities/toronto|chicago )
  */
-router.get('/temps', function (req, res) {
-    let cities = req.query.city;
+router.get('/cities/:cities', function (req, res) {
+    let cities = req.params.cities.split('|')
 
     if (!isValidRequest(cities)) {
         return res.status(400).json({error: {message: 'Please provide one or more cities'}});
@@ -29,7 +26,7 @@ router.get('/temps', function (req, res) {
  * @returns {*|boolean}
  */
 function isValidRequest(cities) {
-    return cities && _.isArray(cities) && cities.length >= 2;
+    return cities && Array.isArray(cities) && cities.length >= 2;
 }
 
 module.exports = router;

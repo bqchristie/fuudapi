@@ -1,16 +1,16 @@
 require('dotenv').config()
+require('./database');
 const express = require('express')
-const app = express();                 // define our app using express
+const app = express();
 const http = require('http');
 const bodyParser = require('body-parser');
-const config = require('./config/config');
 const apiRoutes = require('./api/routes/api');
-const db = require('./database')._connect();
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/api/v1', apiRoutes);
+app.use(`/api/${process.env.API_VERSION}`, apiRoutes);
 
-var httpPort = process.env.HTTP_PORT || 9000;        // set our port
+const httpPort = process.env.HTTP_PORT || 9000;
 
 
 const httpServer = http.createServer(app);
