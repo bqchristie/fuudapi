@@ -1,7 +1,7 @@
-let TemperatureReading = require('../models/temperatureReading')
-let _ = require('lodash')
-let axios = require('axios')
-let moment = require('moment')
+let TemperatureReading = require("../models/temperatureReading")
+let _ = require("lodash")
+let axios = require("axios")
+let moment = require("moment")
 
 /**
  * Return saved readings for a given list of cities
@@ -11,14 +11,13 @@ let moment = require('moment')
  * @returns {Promise<any>}
  */
 function getExistingReadings(cities) {
-
-    return new Promise(function (resolve, reject) {
-            TemperatureReading.find({
-                'city': {$in: cities},
-                'createdAt': {$gt: getRefreshTreshold()}
-            }).then(results => {
-                resolve(results)
-            })
+    return new Promise(function(resolve, reject) {
+        TemperatureReading.find({
+            city: { $in: cities },
+            createdAt: { $gt: getRefreshTreshold() }
+        }).then(results => {
+            resolve(results)
+        });
     }).catch(err => reject(err))
 }
 
@@ -43,21 +42,24 @@ function getRefreshTreshold() {
  * @param requestedCities
  */
 function getMissingReadings(requestedCities, existingTemps) {
+    return new Promise(function(resolve, reject) {
+        let missingCities = _.difference(
+            requestedCities,
+            _.map(existingTemps, "city")
+        );
 
-    return new Promise(function (resolve, reject) {
-
-        let missingCities = _.difference(requestedCities, _.map(existingTemps, 'city'));
-
-        Promise.all(getOpenWeatherCalls(missingCities)).then(responses => {
-            let readings = []
-            responses.forEach(resp => {
-                readings.push(createTemperatureReading(resp.data))
+        Promise.all(getOpenWeatherCalls(missingCities))
+            .then(responses => {
+                let readings = []
+                responses.forEach(resp => {
+                    readings.push(createTemperatureReading(resp.data))
+                });
+                resolve(readings)
             })
-            resolve(readings);
-        }).catch(err =>{
-            reject(err)
-        })
-    })
+            .catch(err => {
+                reject(err)
+            });
+    });
 }
 
 /**
@@ -70,8 +72,8 @@ function createTemperatureReading(data) {
         city: data.name,
         temperature: data.main.temp
     })
-    reading.save();
-    return reading;
+    reading.save()
+    return reading
 }
 
 /**
@@ -94,7 +96,9 @@ function getOpenWeatherCalls(cities) {
  * @returns {string}
  */
 function getOpenWeatherUrl(city) {
-    return `${process.env.OPEN_WEATHER_URL}?q=${city}&units=${process.env.OPEN_WEATHER_UNITS}&APPID=${process.env.OPEN_WEATHER_API_KEY}`
+    return `${process.env.OPEN_WEATHER_URL}?q=${city}&units=${
+        process.env.OPEN_WEATHER_UNITS
+        }&APPID=${process.env.OPEN_WEATHER_API_KEY}`
 }
 
 /**
@@ -112,4 +116,4 @@ async function getReadings(cities) {
 
 module.exports = {
     getReadings: getReadings
-}
+};

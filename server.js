@@ -1,21 +1,19 @@
 require('dotenv').config()
-require('./database');
+require('./database')
 const express = require('express')
-const app = express();
-const http = require('http');
-const bodyParser = require('body-parser');
-const apiRoutes = require('./api/routes/api');
+const app = express()
+const http = require('http')
+const bodyParser = require('body-parser')
+const apiRoutes = require('./api/routes/api')
 
 // Set up middleware
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(`/api/${process.env.API_VERSION}`, apiRoutes);
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(`/api/${process.env.API_VERSION}`, apiRoutes)
 app.use(clientErrorHandler)
 app.use(logErrors)
 
-const httpPort = process.env.HTTP_PORT || 9000;
-
-
-const httpServer = http.createServer(app);
+const httpPort = process.env.HTTP_PORT || 9000
+const httpServer = http.createServer(app)
 
 /**
  * Give back friendly JSON error consumable by the client
@@ -44,6 +42,6 @@ function logErrors(err, req, res, next) {
 }
 
 httpServer.listen(httpPort, () => {
-    console.log('HTTP Server running on port ' + httpPort);
-});
+    console.log('HTTP Server running on port ' + httpPort)
+})
 
