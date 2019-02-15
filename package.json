@@ -4,7 +4,8 @@
   "description": "Sample Weather API",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"See README for notes on POSTMAN TESTS\" && exit 1"
+    "test": "echo \"See README for notes on POSTMAN TESTS\" && exit 1",
+    "api": "node ./server.js"
   },
   "author": "",
   "license": "ISC",
