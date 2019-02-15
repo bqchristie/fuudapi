@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "72f917d4-b8df-4eed-b500-0f1bf44eca70",
+		"name": "THEWEATHER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Temps",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cd509f53-d674-49d0-9eb6-469099b3478b",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Successfully returns array of data\", function () {",
+							"    var body = pm.response.json();",
+							"    pm.expect(Array.isArray(body)).to.eql(true);",
+							"});",
+							"",
+							"pm.test(\"Successfully returns data for 4 cities\", function () {",
+							"    var body = pm.response.json();",
+							"    pm.expect(body.length).to.eql(4);",
+							"});",
+							"",
+							"pm.test(\"Records have city and temperatue\", function () {",
+							"    var body = pm.response.json();",
+							"    pm.expect(body[0].hasOwnProperty('city')).to.eql(true);",
+							"    pm.expect(body[0].hasOwnProperty('temperature')).to.eql(true);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "acc",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/v1/cities/Berlin|Montreal|Toronto|Tokyo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"v1",
+						"cities",
+						"Berlin|Montreal|Toronto|Tokyo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Temps (Unknown city)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0647bac8-0151-4d46-9c10-99ca6290ae89",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/v1/cities/Berlin|Montreal|Toronto|Tokyoz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"v1",
+						"cities",
+						"Berlin|Montreal|Toronto|Tokyoz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Temps (Not enough cities should error)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5707b4dc-0041-4e2b-9c88-49c7aca8b839",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/v1/cities/Toronto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"v1",
+						"cities",
+						"Toronto"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
