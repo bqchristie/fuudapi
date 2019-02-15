@@ -1,6 +1,6 @@
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
-let tempSchema = Schema({
+let temperatureReadingSchema = Schema({
     city: String,
     temperature: Number,
     createdAt:  {
@@ -8,4 +8,5 @@ let tempSchema = Schema({
         default: Date.now
     }
 })
-module.exports = mongoose.model('Temp', tempSchema)
+
+module.exports = mongoose.model('TemperatureReading', temperatureReadingSchema)

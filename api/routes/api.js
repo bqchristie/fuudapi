@@ -1,5 +1,5 @@
 let router = require('express').Router();
-let tempController = require('../controllers/tempController');
+let temperatureReadingController = require('../controllers/temperatureReadingController');
 
 /*
  *   Create an endpoint in node that accepts minimum two cities and then calls
@@ -13,13 +13,14 @@ router.get('/cities/:cities', function (req, res, next) {
         return res.status(400).json({message: 'Please provide two or more cities'});
     }
 
-    tempController.getTemps(cities).then( data => {
+    temperatureReadingController.getTemps(cities).then( data => {
         return res.json(data);
     }).catch(next)
 });
 
 
 /**
+ * Validate that we have a minimum two cities and then calls.
  *
  * @param cities
  * @returns {*|boolean}

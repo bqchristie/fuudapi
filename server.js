@@ -18,6 +18,7 @@ const httpPort = process.env.HTTP_PORT || 9000;
 const httpServer = http.createServer(app);
 
 /**
+ * Give back friendly JSON error consumable by the client
  *
  * @param err
  * @param req
@@ -30,6 +31,7 @@ function clientErrorHandler(err, req, res, next) {
 }
 
 /**
+ *  Log the full error and stack trace for debugging.
  *
  * @param err
  * @param req
