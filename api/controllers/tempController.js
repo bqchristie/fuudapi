@@ -2,7 +2,7 @@
 let Temp = require('../models/temp')
 let _ = require('lodash')
 let axios = require('axios')
-let moment = require('moment');
+let moment = require('moment')
 
 /**
  *
@@ -18,7 +18,7 @@ function getCurrentTemps(cities) {
             }).then(results => {
                 resolve(results)
             })
-    });
+    }).catch(err => reject(err))
 }
 
 /**
@@ -39,6 +39,8 @@ function getRefreshTreshold() {
 function getMissingTemps(requestedCities, existingTemps) {
 
     return new Promise(function (resolve, reject) {
+
+
         let missingCities = _.difference(requestedCities, _.map(existingTemps, 'city'));
 
         Promise.all(getOpenWeatherCalls(missingCities)).then(responses => {
@@ -47,6 +49,8 @@ function getMissingTemps(requestedCities, existingTemps) {
                 readings.push(createTemp(resp.data))
             })
             resolve(readings);
+        }).catch(err =>{
+            reject(err)
         })
     })
 }

@@ -5,18 +5,17 @@ let tempController = require('../controllers/tempController');
  *   Create an endpoint in node that accepts minimum two cities and then calls
  *   an open weather API (ie. /endpoint/cities/toronto|chicago )
  */
-router.get('/cities/:cities', function (req, res) {
+router.get('/cities/:cities', function (req, res, next) {
+
     let cities = req.params.cities.split('|')
 
     if (!isValidRequest(cities)) {
-        return res.status(400).json({error: {message: 'Please provide one or more cities'}});
+        return res.status(400).json({message: 'Please provide two or more cities'});
     }
 
     tempController.getTemps(cities).then( data => {
         return res.json(data);
-    }).catch( err => {
-        return res.status(500).json(err);
-    })
+    }).catch(next)
 });
 
 
