@@ -1,7 +1,5 @@
-let TemperatureReading = require("../models/temperatureReading");
-let _ = require("lodash");
-let axios = require("axios");
-let moment = require("moment");
+const TemperatureReading = require("../models/temperatureReading");
+const util = require("./tempeartureReadingController.util");
 
 /**
  * Return saved readings for a given list of cities
@@ -14,24 +12,13 @@ function getExistingReadings(cities) {
   return new Promise(function(resolve, reject) {
     TemperatureReading.find({
       city: { $in: cities },
-      createdAt: { $gt: getRefreshTreshold() }
+      createdAt: { $gt: util.getRefreshTreshold() }
     }).then(results => {
       resolve(results);
     });
   }).catch(err => reject(err));
 }
 
-/**
- *  Returns the Date that we use to determine if we need
- *  a fresh reading.  The refresh interval and units are stored in the .env file.
- *
- * @returns {Date}
- */
-function getRefreshTreshold() {
-  return moment()
-    .subtract(process.env.REFRESH_INTERVAL, process.env.REFRESH_UNIT)
-    .toDate();
-}
 
 /**
  * Compares the list of cities requested vs the list of cities where
@@ -43,9 +30,9 @@ function getRefreshTreshold() {
  */
 function getMissingReadings(requestedCities, existingReadings) {
   return new Promise(function(resolve, reject) {
-    let missingCities = getMissingCities(requestedCities, existingReadings);
+    let missingCities = util.getMissingCities(requestedCities, existingReadings);
 
-    Promise.all(getOpenWeatherCalls(missingCities))
+    Promise.all(util.getOpenWeatherCalls(missingCities))
       .then(responses => {
         let readings = [];
         responses.forEach(resp => {
@@ -60,22 +47,6 @@ function getMissingReadings(requestedCities, existingReadings) {
 }
 
 /**
- * Takes a String array of cities and an object array of existing readings. First
- * it maps object array to a string array then does a compare returning
- * the values in requested cities that are not in
- *
- * @param requestedCities
- * @param existingTemps
- * @returns {*}
- */
-function getMissingCities(requestedCities, existingTemps) {
-  return _.difference(
-    requestedCities,
-    _.map(existingTemps, "city")
-  );
-}
-
-/**
  *  Writes a temperature reading to MongoDB
  *
  * @param data
@@ -87,31 +58,6 @@ function createTemperatureReading(data) {
   });
   reading.save();
   return reading;
-}
-
-/**
- * Returns an array of promises calling the Open Weather API for a
- * given list of cities.
- *
- * @param cities
- * @returns {*}
- */
-function getOpenWeatherCalls(cities) {
-  return cities.map(city => {
-    return axios.get(getOpenWeatherUrl(city));
-  });
-}
-
-/**
- * Assembles a URL using properties from the .env file and the given city.
- *
- * @param city
- * @returns {string}
- */
-function getOpenWeatherUrl(city) {
-  return `${process.env.OPEN_WEATHER_URL}?q=${city}&units=${
-    process.env.OPEN_WEATHER_UNITS
-    }&APPID=${process.env.OPEN_WEATHER_API_KEY}`;
 }
 
 /**
