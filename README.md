@@ -50,7 +50,7 @@ curl -X GET \
 
 ## Proxying the App in NGINX
 
-As requested, a sample nginx.conf file is avialbable in teh root directory and demonstartes  how we'd proxy the app so that it would be available on port 80.
+As requested, a sample nginx.conf file is avialbable in the root directory and demonstrates how we'd proxy the app so that it would be available on port 80.
 
 ## Testing and Docs
 
