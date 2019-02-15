@@ -1,12 +1,11 @@
-//let mongoose = require('mongoose')
 let TemperatureReading = require('../models/temperatureReading')
 let _ = require('lodash')
 let axios = require('axios')
 let moment = require('moment')
 
 /**
- * Return current readings for a given list of cities where we
- * have saved readings within a given time threshold.
+ * Return saved readings for a given list of cities
+ * within a given time threshold.
  *
  * @param cities
  * @returns {Promise<any>}
@@ -25,7 +24,7 @@ function getExistingReadings(cities) {
 
 /**
  *  Returns the Date that we use to determine if we need
- *  a fresh reading.  The interval and refresh units are stored in the .env file.
+ *  a fresh reading.  The refresh interval and units are stored in the .env file.
  *
  * @returns {Date}
  */
@@ -38,7 +37,7 @@ function getRefreshTreshold() {
 /**
  * Compares the list of cities requested vs the list of cities where
  * we already have readings.  For the missing cities we'll make an API call
- * and save to the DB.
+ * and save to the DB.  We then return the list of new readings.
  *
  * @param savedCities
  * @param requestedCities
@@ -46,7 +45,6 @@ function getRefreshTreshold() {
 function getMissingReadings(requestedCities, existingTemps) {
 
     return new Promise(function (resolve, reject) {
-
 
         let missingCities = _.difference(requestedCities, _.map(existingTemps, 'city'));
 
@@ -100,18 +98,18 @@ function getOpenWeatherUrl(city) {
 }
 
 /**
- * This is the public access methods for a list of TeameratureReadings for a given
+ * This is the public access method for a list of TemperatureReadings for a given
  * list of cities.
  *
  * @param cities
  * @returns {Promise<any>}
  */
-async function getTemps(cities) {
+async function getReadings(cities) {
     const existingReadings = await getExistingReadings(cities)
     const newReadings = await getMissingReadings(cities, existingReadings)
     return existingReadings.concat(newReadings)
 }
 
 module.exports = {
-    getTemps: getTemps
+    getReadings: getReadings
 }

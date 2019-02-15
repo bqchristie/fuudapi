@@ -25,8 +25,7 @@ REFRESH_UNIT=hours
 
 Simple tests and docs are done using Postman[https://www.getpostman.com/]
 
-The test collection is saved in tests or you get get the collection here.
-https://www.getpostman.com/collections/2b49b09120fc7e048795
+The test collection is saved in tests:
 
 The published docs are here.
 

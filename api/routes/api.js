@@ -13,7 +13,7 @@ router.get('/cities/:cities', function (req, res, next) {
         return res.status(400).json({message: 'Please provide two or more cities'});
     }
 
-    temperatureReadingController.getTemps(cities).then( data => {
+    temperatureReadingController.getReadings(cities).then(data => {
         return res.json(data);
     }).catch(next)
 });
