@@ -14,7 +14,6 @@ Hey guys, thanks for taking the time to review this code.   I hope to have the c
 ## Configuration
 
 All environment variables are set up in the .env file. Typically I wouldn't commit this to the repository but for demo purposes I will.  The settings are as follows:
-
 ```
 OPEN_WEATHER_URL=http://api.openweathermap.org/data/2.5/weather
 OPEN_WEATHER_API_KEY=bf89e941da14d9a5e0a60764ed99bf4a
@@ -38,7 +37,6 @@ Then start the server:
 Once up and running you should see some feedback on the console saying that the app in running at http://localhost:9000
 
 Sample call:
-
 ```
 curl -X GET \
   'http://localhost:9000/api/v1/cities/Berlin|Montreal|Toronto|Chicago' \
@@ -53,12 +51,16 @@ curl -X GET \
 As requested, a sample nginx.conf file is avialbable in the root directory and demonstrates how we'd proxy the app so that it would be available on port 80.
 
 ## Testing and Docs
+Jest Unit test can be run with
+```
+npm test
+```
 
-Simple tests and docs are done using [Postman](https://www.getpostman.com/).
+End to end tests and docs are done using [Postman](https://www.getpostman.com/).
 
-The test collection is saved in **tests/THEWEATHER.postman_collection.json** and can be imported into Postman.
+The test collection is saved in **e2e_tests/THEWEATHER.postman_collection.json** and can be imported into Postman.
 
-The published docs for the api are[ here](https://documenter.getpostman.com/view/2071/RztspRw6).
+The published docs for the api are [here](https://documenter.getpostman.com/view/2071/RztspRw6).
 
 
 
