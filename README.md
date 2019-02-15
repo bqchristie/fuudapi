@@ -1,6 +1,6 @@
 # WEATHERAPI
 
-Thanks for taking the time to review this code.   I hope to have the chance to dicsuss in person in the near future.  Have a great Weekend!
+Hey guys, thanks for taking the time to review this code.   I hope to have the chance to dicsuss it with you in person sometime in the near future.  Have a great Weekend!
 
 ## The Spec
 
