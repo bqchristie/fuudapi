@@ -1,6 +1,7 @@
 const _ = require("lodash");
 const moment = require("moment");
 const axios = require("axios");
+const TemperatureReading = require("../models/temperatureReading");
 /**
  * Takes a String array of cities and an object array of existing readings. First
  * it maps object array to a string array then does a compare returning
@@ -55,8 +56,23 @@ function getOpenWeatherUrl(city) {
     }&APPID=${process.env.OPEN_WEATHER_API_KEY}`;
 }
 
+/**
+ * Transpose open weather data to our model
+ *
+ * @param data
+ * @returns {*}
+ */
+function transposeOpenWeatherData(data) {
+  let reading = new TemperatureReading({
+    city: data.name,
+    temperature: data.main.temp
+  });
+  return reading;
+}
+
 module.exports = {
   getMissingCities,
   getRefreshTreshold,
-  getOpenWeatherCalls
+  getOpenWeatherCalls,
+  transposeOpenWeatherData
 };

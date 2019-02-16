@@ -36,28 +36,17 @@ function getMissingReadings(requestedCities, existingReadings) {
       .then(responses => {
         let readings = [];
         responses.forEach(resp => {
-          readings.push(createTemperatureReading(resp.data));
+          readings.push(util.transposeOpenWeatherData(resp.data));
         });
-        resolve(readings);
+        TemperatureReading.insertMany(readings, (err) => {
+          if (err) throw err;
+          resolve(readings);
+        });
       })
       .catch(err => {
         reject(err);
       });
   });
-}
-
-/**
- *  Writes a temperature reading to MongoDB
- *
- * @param data
- */
-function createTemperatureReading(data) {
-  let reading = new TemperatureReading({
-    city: data.name,
-    temperature: data.main.temp
-  });
-  reading.save();
-  return reading;
 }
 
 /**
