@@ -57,8 +57,8 @@ function getMissingReadings(requestedCities, existingReadings) {
  * @returns {Promise<any>}
  */
 async function getReadings(cities) {
-  const existingReadings = await getExistingReadings(cities);
-  const newReadings = await getMissingReadings(cities, existingReadings);
+  let existingReadings = await getExistingReadings(cities);
+  let newReadings = await getMissingReadings(cities, existingReadings);
   return existingReadings.concat(newReadings);
 }
 
