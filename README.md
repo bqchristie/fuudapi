@@ -34,6 +34,12 @@ Then start the server:
 
     `npm run api`    
 
+To debug:
+
+    `npm run api-debug` 
+
+This will start in nodemon allowing updates on the fly and uses the --inspect flag so we can debug through Chrom console.
+
 Once up and running you should see some feedback on the console saying that the app in running at http://localhost:9000
 
 Sample call:

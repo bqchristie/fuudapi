@@ -15,8 +15,8 @@ function getExistingReadings(cities) {
       createdAt: { $gt: util.getRefreshTreshold() }
     }).then(results => {
       resolve(results);
-    });
-  }).catch(err => reject(err));
+    }).catch(err => reject(err));
+  });
 }
 
 
@@ -34,9 +34,8 @@ function getMissingReadings(requestedCities, existingReadings) {
 
     Promise.all(util.getOpenWeatherCalls(missingCities))
       .then(responses => {
-        let readings = [];
-        responses.forEach(resp => {
-          readings.push(util.transposeOpenWeatherData(resp.data));
+        let readings = responses.map(resp => {
+          return util.transposeOpenWeatherData(resp.data);
         });
         TemperatureReading.insertMany(readings, (err) => {
           if (err) throw err;
