@@ -1,4 +1,4 @@
-let _ = require("lodash");
+let _ = require('lodash')
 
 /**
  * Need to split the cities parameter into an Array. Also need to fix the data so that is
@@ -10,7 +10,7 @@ let _ = require("lodash");
  * @returns {any[]}
  */
 function getCities(req) {
-  return req.params.cities.split("|").map(city => _.startCase(city.toLowerCase()));
+  return req.params.cities.split('|').map(city => _.startCase(city.toLowerCase()))
 }
 
 /**
@@ -20,10 +20,10 @@ function getCities(req) {
  * @returns {*|boolean}
  */
 function isValidRequest(cities) {
-  return cities && Array.isArray(cities) && cities.length >= 2;
+  return cities && Array.isArray(cities) && cities.length >= 2
 }
 
 module.exports = {
   getCities,
   isValidRequest
-};
+}

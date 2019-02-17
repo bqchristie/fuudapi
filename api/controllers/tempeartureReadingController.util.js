@@ -1,7 +1,8 @@
-const _ = require("lodash");
-const moment = require("moment");
-const axios = require("axios");
-const TemperatureReading = require("../models/temperatureReading");
+const _ = require('lodash')
+const moment = require('moment')
+const axios = require('axios')
+const TemperatureReading = require('../models/temperatureReading')
+
 /**
  * Takes a String array of cities and an object array of existing readings. First
  * it maps object array to a string array then does a compare returning
@@ -14,8 +15,8 @@ const TemperatureReading = require("../models/temperatureReading");
 function getMissingCities(requestedCities, existingTemps) {
   return _.difference(
     requestedCities,
-    _.map(existingTemps, "city")
-  );
+    _.map(existingTemps, 'city')
+  )
 }
 
 
@@ -28,7 +29,7 @@ function getMissingCities(requestedCities, existingTemps) {
 function getRefreshTreshold() {
   return moment()
     .subtract(process.env.REFRESH_INTERVAL, process.env.REFRESH_UNIT)
-    .toDate();
+    .toDate()
 }
 
 /**
@@ -40,8 +41,8 @@ function getRefreshTreshold() {
  */
 function getOpenWeatherCalls(cities) {
   return cities.map(city => {
-    return axios.get(getOpenWeatherUrl(city));
-  });
+    return axios.get(getOpenWeatherUrl(city))
+  })
 }
 
 /**
@@ -53,7 +54,7 @@ function getOpenWeatherCalls(cities) {
 function getOpenWeatherUrl(city) {
   return `${process.env.OPEN_WEATHER_URL}?q=${city}&units=${
     process.env.OPEN_WEATHER_UNITS
-    }&APPID=${process.env.OPEN_WEATHER_API_KEY}`;
+    }&APPID=${process.env.OPEN_WEATHER_API_KEY}`
 }
 
 /**
@@ -66,8 +67,8 @@ function transposeOpenWeatherData(data) {
   let reading = new TemperatureReading({
     city: data.name,
     temperature: data.main.temp
-  });
-  return reading;
+  })
+  return reading
 }
 
 module.exports = {
@@ -75,4 +76,4 @@ module.exports = {
   getRefreshTreshold,
   getOpenWeatherCalls,
   transposeOpenWeatherData
-};
+}

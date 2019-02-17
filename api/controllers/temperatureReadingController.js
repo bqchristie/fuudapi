@@ -1,5 +1,5 @@
-const TemperatureReading = require("../models/temperatureReading");
-const util = require("./tempeartureReadingController.util");
+const TemperatureReading = require('../models/temperatureReading')
+const util = require('./tempeartureReadingController.util')
 
 /**
  * Return saved readings for a given list of cities
@@ -14,9 +14,9 @@ function getExistingReadings(cities) {
       city: { $in: cities },
       createdAt: { $gt: util.getRefreshTreshold() }
     }).then(results => {
-      resolve(results);
-    }).catch(err => reject(err));
-  });
+      resolve(results)
+    }).catch(err => reject(err))
+  })
 }
 
 
@@ -30,22 +30,22 @@ function getExistingReadings(cities) {
  */
 function getMissingReadings(requestedCities, existingReadings) {
   return new Promise(function(resolve, reject) {
-    let missingCities = util.getMissingCities(requestedCities, existingReadings);
+    let missingCities = util.getMissingCities(requestedCities, existingReadings)
 
     Promise.all(util.getOpenWeatherCalls(missingCities))
       .then(responses => {
         let readings = responses.map(resp => {
-          return util.transposeOpenWeatherData(resp.data);
-        });
+          return util.transposeOpenWeatherData(resp.data)
+        })
         TemperatureReading.insertMany(readings, (err) => {
-          if (err) throw err;
-          resolve(readings);
-        });
+          if (err) throw err
+          resolve(readings)
+        })
       })
       .catch(err => {
-        reject(err);
-      });
-  });
+        reject(err)
+      })
+  })
 }
 
 /**
@@ -56,11 +56,11 @@ function getMissingReadings(requestedCities, existingReadings) {
  * @returns {Promise<any>}
  */
 async function getReadings(cities) {
-  let existingReadings = await getExistingReadings(cities);
-  let newReadings = await getMissingReadings(cities, existingReadings);
-  return existingReadings.concat(newReadings);
+  let existingReadings = await getExistingReadings(cities)
+  let newReadings = await getMissingReadings(cities, existingReadings)
+  return existingReadings.concat(newReadings)
 }
 
 module.exports = {
   getReadings: getReadings
-};
+}

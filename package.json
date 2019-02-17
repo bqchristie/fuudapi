@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Sample Weather API",
   "main": "server.js",
+  "repository": "https://github.com/bqchristie/weatherapi",
   "scripts": {
     "test": "jest --watchAll",
     "api": "node ./server.js",
@@ -22,5 +23,12 @@
     "jest": "^24.1.0",
     "nodemon": "^1.18.10",
     "prettier": "^1.16.4"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
