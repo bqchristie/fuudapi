@@ -1,6 +1,6 @@
 let util = require("./api.util");
 
-test("Expect cities to be normalize when mixed case", () => {
+test("Expect cities to be normalized when mixed case", () => {
   var req = {
     params: { cities: "new YorK|BOSTON|ToRoNTO" }
   };

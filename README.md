@@ -38,7 +38,7 @@ To debug:
 
     `npm run api-debug` 
 
-This will start in nodemon allowing updates on the fly and uses the --inspect flag so we can debug through Chrom console.
+This will start in nodemon allowing updates on the fly and uses the --inspect flag so we can debug through Chrome console.
 
 Once up and running you should see some feedback on the console saying that the app in running at http://localhost:9000
 
@@ -54,7 +54,7 @@ curl -X GET \
 
 ## Proxying the App in NGINX
 
-As requested, a sample nginx.conf file is avialbable in the root directory and demonstrates how we'd proxy the app so that it would be available on port 80.
+As requested, a sample nginx.conf file is available in the root directory and demonstrates how we'd proxy the app so that it would be available on port 80.
 
 ## Testing and Docs
 Jest Unit test can be run with
