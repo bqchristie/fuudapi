@@ -2,7 +2,7 @@ const TemperatureReading = require('../models/temperatureReading')
 const util = require('./tempeartureReadingController.util')
 
 /**
- * Return saved readings for a given list of cities
+ * Return saved readings for a given list of cities extra long extra long extra long
  * within a given time threshold.
  *
  * @param cities
