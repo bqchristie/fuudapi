@@ -5,7 +5,10 @@
   "main": "server.js",
   "repository": "https://github.com/bqchristie/weatherapi",
   "scripts": {
-    "test": "jest --watchAll",
+    "lint": "eslint .",
+    "test": "jest",
+    "prepush": "npm run lint && npm test",
+    "test:watch": "jest --watchAll",
     "api": "node ./server.js",
     "api-debug": "nodemon --inspect ./server.js"
   },
@@ -20,6 +23,8 @@
     "mongoose": "^5.4.11"
   },
   "devDependencies": {
+    "eslint": "^5.14.0",
+    "husky": "^1.3.1",
     "jest": "^24.1.0",
     "nodemon": "^1.18.10",
     "prettier": "^1.16.4"

@@ -13,7 +13,7 @@ class Database {
         console.log('Database connection successful')
       })
       .catch(err => {
-        console.error('Database connection error')
+        if (err) throw err
       })
   }
 }

@@ -49,8 +49,8 @@ function getMissingReadings(requestedCities, existingReadings) {
 }
 
 /**
- * This is the public access method for a list of TemperatureReadings for a given
- * list of cities.
+ * This is the public access method for a list of TemperatureReadings for
+ * a given list of cities.
  *
  * @param cities
  * @returns {Promise<any>}

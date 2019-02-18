@@ -2,7 +2,8 @@ const moment = require('moment')
 const util = require('./tempeartureReadingController.util')
 const TemperatureReading = require('../models/temperatureReading')
 
-test('Should find missing cities when passed string[] of cities and object[] reading', () => {
+test(`Should find missing cities when passed string[] of 
+    cities and obj[] reading1`, () => {
   let requestedCities = ['New York', 'Boston', 'Toronto', 'Las Vegas']
   let existingReadings = [{ city: 'Boston' }, { city: 'Toronto' }]
 
@@ -38,14 +39,15 @@ test('Should set the date threshold properly', () => {
 
 })
 
-test('getOpenWeatherCalls should return an array of promises when pass a string []', () => {
+test(`getOpenWeatherCalls should return an array of promises when pass a
+ string []`, () => {
   let requestedCities = ['New York', 'Boston', 'Toronto', 'Las Vegas']
   let promises = util.getOpenWeatherCalls(requestedCities)
   expect(promises.length).toBe(4)
   expect(promises[0] instanceof Promise).toBe(true)
 })
 
-test('transposing data we get back from Open Weather to our model', () => {
+test('Transposing data we get back from Open Weather to our model', () => {
   let data = {
     name: 'Portland',
     main: { temp: 999 }

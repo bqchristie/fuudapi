@@ -4,8 +4,8 @@ const axios = require('axios')
 const TemperatureReading = require('../models/temperatureReading')
 
 /**
- * Takes a String array of cities and an object array of existing readings. First
- * it maps object array to a string array then does a compare returning
+ * Takes a String array of cities and an object array of existing readings.
+ * First it maps object array to a string array then does a compare returning
  * the values in requested cities that are not in
  *
  * @param requestedCities
@@ -21,8 +21,9 @@ function getMissingCities(requestedCities, existingTemps) {
 
 
 /**
- *  Returns the Date that we use to determine if we need
- *  a fresh reading.  The refresh interval and units are stored in the .env file.
+ * Returns the Date that we use to determine if we need
+ * a fresh reading.  The refresh interval and units are stored in
+ * the .env file.
  *
  * @returns {Date}
  */
@@ -52,9 +53,8 @@ function getOpenWeatherCalls(cities) {
  * @returns {string}
  */
 function getOpenWeatherUrl(city) {
-  return `${process.env.OPEN_WEATHER_URL}?q=${city}&units=${
-    process.env.OPEN_WEATHER_UNITS
-    }&APPID=${process.env.OPEN_WEATHER_API_KEY}`
+  return `${process.env.OPEN_WEATHER_URL}?q=${city}&units=
+  ${process.env.OPEN_WEATHER_UNITS}&APPID=${process.env.OPEN_WEATHER_API_KEY}`
 }
 
 /**
