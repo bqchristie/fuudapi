@@ -1,16 +1,17 @@
 let _ = require('lodash')
 
 /**
- * Need to split the cities parameter into an Array. Also need to fix the data so that is
- * is properly cased.  The API is not case sensitive on the request but always
- * returns a capiltalized string when returned.  Could deal with this in the controller
- * query but need to normalize at some point.
+ * Need to split the cities parameter into an Array. Also need to fix the data
+ * so that is is properly cased.  The API is not case sensitive on the request
+ * but alwaysreturns a capiltalized string when returned.  Could deal with this
+ * in the controller query but need to normalize at some point.
  *
  * @param req
  * @returns {any[]}
  */
 function getCities(req) {
-  return req.params.cities.split('|').map(city => _.startCase(city.toLowerCase()))
+  return req.params.cities.split('|')
+    .map(city => _.startCase(city.toLowerCase()))
 }
 
 /**
