@@ -74,9 +74,20 @@ The test collection is saved in **e2e_tests/THEWEATHER.postman_collection.json**
 The published docs for the api are [here](https://documenter.getpostman.com/view/2071/RztspRw6).
 
 
-## Pre push hooks
+## Git hooks
 
+Before doing a commit or push all code is run through eslint
+(which has Pretier plugged in) and unit tests are run.  If
+anything fails the the commit/push is aborted.
 
+```
+"husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm test",
+      "pre-push": "npm run lint && npm test"
+    }
+  }
+```
 
 
 ## That's about all
