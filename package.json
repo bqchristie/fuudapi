@@ -9,7 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "api": "node ./server.js",
-    "api-debug": "nodemon --inspect ./server.js"
+    "api:debug": "nodemon --inspect ./server.js"
   },
   "author": "",
   "license": "ISC",
