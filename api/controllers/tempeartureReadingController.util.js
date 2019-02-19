@@ -16,7 +16,6 @@ function getMissingCities(requestedCities, existingTemps) {
   return _.difference(requestedCities, _.map(existingTemps, 'city'))
 }
 
-
 /**
  * Returns the Date that we use to determine if we need
  * a fresh reading.  The refresh interval and units are stored in

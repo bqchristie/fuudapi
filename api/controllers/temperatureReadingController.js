@@ -13,12 +13,13 @@ function getExistingReadings(cities) {
     TemperatureReading.find({
       city: { $in: cities },
       createdAt: { $gt: util.getRefreshTreshold() }
-    }).then(results => {
-      resolve(results)
-    }).catch(err => reject(err))
+    })
+      .then(results => {
+        resolve(results)
+      })
+      .catch(err => reject(err))
   })
 }
-
 
 /**
  * Compares the list of cities requested vs the list of cities where
@@ -37,7 +38,7 @@ function getMissingReadings(requestedCities, existingReadings) {
         let readings = responses.map(resp => {
           return util.transposeOpenWeatherData(resp.data)
         })
-        TemperatureReading.insertMany(readings, (err) => {
+        TemperatureReading.insertMany(readings, err => {
           if (err) throw err
           resolve(readings)
         })

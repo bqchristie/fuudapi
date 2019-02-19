@@ -7,7 +7,6 @@ let tempReadingCtl = require('../controllers/temperatureReadingController')
  *   an open weather API (ie. /endpoint/cities/toronto|chicago )
  */
 router.get('/cities/:cities', function(req, res, next) {
-
   let cities = util.getCities(req)
 
   if (!util.isValidRequest(cities)) {
@@ -23,6 +22,5 @@ router.get('/cities/:cities', function(req, res, next) {
     })
     .catch(next)
 })
-
 
 module.exports = router

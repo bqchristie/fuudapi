@@ -10,7 +10,8 @@ let _ = require('lodash')
  * @returns {any[]}
  */
 function getCities(req) {
-  return req.params.cities.split('|')
+  return req.params.cities
+    .split('|')
     .map(city => _.startCase(city.toLowerCase()))
 }
 

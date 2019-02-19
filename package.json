@@ -8,7 +8,6 @@
     "lint": "eslint .",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "prepush": "npm run lint && npm test",
     "api": "node ./server.js",
     "api-debug": "nodemon --inspect ./server.js"
   },
@@ -36,5 +35,8 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "husky.hooks ": {
+    "prepush": "npm run lint && npm test"
   }
 }

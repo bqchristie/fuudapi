@@ -25,7 +25,6 @@ test('Should set the date threshold properly', () => {
   now = moment()
   expect(now.diff(threshold, 'hours')).toBe(1)
 
-
   process.env.REFRESH_UNIT = 'days'
   threshold = util.getRefreshTreshold()
   now = moment()
@@ -35,8 +34,6 @@ test('Should set the date threshold properly', () => {
   threshold = util.getRefreshTreshold()
   now = moment()
   expect(now.diff(threshold, 'days')).toBe(5)
-
-
 })
 
 test(`getOpenWeatherCalls should return an array of promises when pass a
