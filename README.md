@@ -62,11 +62,20 @@ Jest Unit test can be run with
 npm test
 ```
 
+or
+```
+npm test:watch
+```
+
 End to end tests and docs are done using [Postman](https://www.getpostman.com/).
 
 The test collection is saved in **e2e_tests/THEWEATHER.postman_collection.json** and can be imported into Postman.
 
 The published docs for the api are [here](https://documenter.getpostman.com/view/2071/RztspRw6).
+
+
+## Pre push hooks
+
 
 
 

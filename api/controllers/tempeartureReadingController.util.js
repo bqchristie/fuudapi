@@ -13,10 +13,7 @@ const TemperatureReading = require('../models/temperatureReading')
  * @returns {*}
  */
 function getMissingCities(requestedCities, existingTemps) {
-  return _.difference(
-    requestedCities,
-    _.map(existingTemps, 'city')
-  )
+  return _.difference(requestedCities, _.map(existingTemps, 'city'))
 }
 
 
